@@ -5,7 +5,7 @@
 
 ---
 
-![markup](https://github.com/ArtemChubatyi/tic_tac_toe/blob/master/preview.jpg "Превью")
+![markup](https://github.com/ArtemChubatyi/tic_tac_toe/blob/master/preview.bmp "Превью")
 
 ---
 
