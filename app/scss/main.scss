@@ -47,8 +47,15 @@ body {
 b, strong {
 	font-weight: bold;
 }
+body {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+}
+
 
 .game {
+	cursor: pointer;
 	box-sizing: border-box;
 	width: 306px;
 	height: 306px;
@@ -61,8 +68,39 @@ b, strong {
 		font-size: 92px;
 		line-height: 92px;
 		text-align: center;
+		transition: linear .3s;
+		&:hover {
+			background: rgb(235, 228, 228);
+		}
+		svg {
+			height: 100%;
+		}
 	}
 }
-
+.title-wrap {
+	display: flex;
+	h1 {}
+	vertical-align: middle;
+	svg {
+		margin-top: -1px;
+		vertical-align: middle;
+		height: 30px;
+		width: 30px;
+	}
+}
+#reset {
+	outline: 0;
+	margin-top: 30px;
+	background: #fff;
+	border: 2px solid black;
+	border-radius: 20px;
+	padding: 10px 20px;
+	font-weight: bold;
+	cursor: pointer;
+	transition: linear .3s;
+	&:hover {
+		background: rgb(235, 228, 228);
+	}
+}
 
 @import "media"; // Always at the end
