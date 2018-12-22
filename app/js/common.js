@@ -1,3 +1,7 @@
+/**
+ * 1. Function constructor like new Game()
+ */
+
 function createGame() {
     this.table = document.getElementById('game');
 	this.coefficient = 3;
@@ -20,23 +24,8 @@ function createGame() {
 	} else {
 		this.player = this.crosses;
 	}
-    this.buildTable = () => {
-        this.table.style.width = (70 * this.coefficient) + 6 + 'px';
-        this.table.style.height = (70 * this.coefficient) + 6 + 'px';
-        for (let c = 0; c < this.coefficient; c++) {
-            for (let i = 0; i <  this.coefficient; i++) {
-				if(localStorage.getItem(c.toString() + i.toString()) !== null) {
-					this.table.innerHTML += `<div class="game_block" data-row="${c}"  data-COLUMN="${i}"> ${localStorage.getItem(c.toString() + i.toString())}</div>`;
-				} else {
-					this.table.innerHTML += `<div class="game_block" data-row="${c}"  data-COLUMN="${i}"></div>`;
-				}
-            }
-		}
-		this.blocks = document.querySelectorAll('.game_block');
-    
-	};
 
-    this.buildMatrix = () => {
+	this.buildMatrix = () => {
 		if(localStorage.getItem("matrix") !== null) {
 			this.matrix = JSON.parse(localStorage.getItem("matrix"));
 		} else {
@@ -52,10 +41,45 @@ function createGame() {
         
     };
 
+	this.start = () => {
+		this.buildMatrix();
+		this.buildTableBetter()
+	}
+
+	this.buildTableBetter = () => {
+	
+		this.table.style.width = (70 * this.coefficient) + 6 + 'px';
+		this.table.style.height = (70 * this.coefficient) + 6 + 'px';
+		
+		let tableContent = '';
+
+		this.matrix.forEach((matrixRow, i) => {
+			matrixRow.forEach((matrixCell, j) => {
+				tableContent += `<div class="game_block" data-row="${i}" data-COLUMN="${j}">${renderCellContent(matrixCell)}</div>`
+			});
+		});
+
+		this.table.innerHTML = tableContent;
+		this.blocks = document.querySelectorAll('.game_block');
+	}
+
+	let renderCellContent = (nodeType) => {
+		if(nodeType === 1) {
+			return this.crosses;
+		} else if(nodeType === -1) {
+			return this.circles;
+		} else {
+			return '';
+		}
+	}
+
+
+    
+
     this.rebuild = () => {
         this.quantity = this.coefficient * this.coefficient;
         this.table.innerHTML = '';
-        this.buildTable();
+        this.buildTableBetter();
         this.buildMatrix();
         this.doReset();
     };
@@ -77,7 +101,6 @@ function createGame() {
 		
 	    if(target.className == "game_block") {
 			target.innerHTML = this.player;
-			localStorage.setItem((target.getAttribute('data-row') + target.getAttribute('data-column')), this.player);
 		    if(this.player === this.crosses) {
 			    this.matrix[curentRow][curentCol] += 1;
 		    } else if(this.player === this.circles) {
@@ -178,6 +201,6 @@ function createGame() {
 
 
 const game = new createGame();
-game.buildTable();
-game.buildMatrix();
 
+
+game.start();
